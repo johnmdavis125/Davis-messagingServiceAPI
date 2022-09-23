@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const MessageSchema = new Schema(
     {
-        success: {type: Boolean},
-        message: {type: String},
-        token: {type: String}
+        success: {type: Boolean, required: true},
+        message: {type: String, required: true},
+        token: {type: String, required: true}
     }
 )
 
