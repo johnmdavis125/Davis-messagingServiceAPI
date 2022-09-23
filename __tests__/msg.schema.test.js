@@ -10,12 +10,12 @@ beforeAll(() => {
     }); 
 
     mongoose.connection
-        .once('open', () => console.log('connected to test db'))
+        .once('open', () => console.log('msg.schema.test connected to test db'))
         .on('error', ()=>{
             console.warn('mongo test cxn warning', error)
     });
 
-    mongoose.connection.collections.messages.drop(); 
+    // mongoose.connection.collections.messages.drop(); 
 })
 
 describe('message model/schema', () => {
@@ -23,7 +23,7 @@ describe('message model/schema', () => {
         const testMessage = {
             success: true,
             message: 'error message is different',
-            token: 'test token string'
+            token: 'test token string - schema test'
         }; 
         Message.create(testMessage)
         .then(() => {
