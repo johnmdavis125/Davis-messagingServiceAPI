@@ -1,2 +1,2 @@
-###ICC Code Challenge
-####Davis - Messaging Service API
+### Code Challenge
+#### Davis - Messaging Service API
