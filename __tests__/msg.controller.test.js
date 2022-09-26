@@ -37,11 +37,11 @@ describe('message controller: endpoint #1', () => {
     })
 
     it('finds the newly created message in the database', (done) => {
-        Message.find({ token: 'this will be a token' })
+        Message.find({})
         .then((documents) => {
-            expect(documents[0].token).toEqual('this will be a token'); 
+            expect(documents.length).toEqual(1); 
+            expect(documents[0].token).toBeTruthy(); 
         done(); 
         })
-        
     })
 })
