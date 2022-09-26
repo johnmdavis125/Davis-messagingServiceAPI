@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router(); 
 const Message = require('../Models/Message'); 
 const createToken = require('../Utils/jwt_helpers'); 
-
+const validatePostToMessageRoute = require('../Utils/validation_helpers'); 
 // Endpoint #1: Creating the Token 
 router.post('/message', (req, res) => {
     console.log('req.body', req.body);
@@ -13,11 +13,15 @@ router.post('/message', (req, res) => {
     let validatedUserInput; 
     
     // validation logic (placeholder)
-        let validated = true;
-        if (validated) {
+        const { error, value } = validatePostToMessageRoute(req.body);
+        console.log(error, value); 
+
+        if (error) {
+            errorMessage = error.details;
+        } else {
             success = true; 
             errorMessage = null; 
-            validatedUserInput = req.body; 
+            validatedUserInput = value; 
         }
 
     // JWT generated
@@ -27,9 +31,9 @@ router.post('/message', (req, res) => {
 
     // output shape
         let shapedData = {
-            success: success, // true
-            message: errorMessage, // null 
-            token: token // should be an actual token now
+            success: success,
+            message: errorMessage,
+            token: token
         }
         console.log('shapedData', shapedData); 
    
