@@ -42,30 +42,49 @@ router.post('/message', (req, res) => {
 // Endpoint #2: Retrieving the message 
 router.get('/message/:token', (req, res) => {
     Message.find({ token: req.params.token }, (error, foundMessage) => {
-        const { token } = foundMessage[0]; 
+        const { success, token } = foundMessage[0]; 
         const { decodedToken, errMsg } = decodeToken(token);
+        let shapedOutput; 
         
-        let shapedOutput = {
-            errorMessage: errMsg
-        }
-
-        if (decodedToken){
-            const { name, email, message } = decodedToken.data;  
-            Object.assign(shapedOutput, { 
-                success: true,
-                name: name,
-                email: email,
-                message: message
-            }); 
-        } else {            
-            Object.assign(shapedOutput, {
+        // Token has not been used
+        if (success) {
+            console.log('success!:', success)
+            Message.findOneAndUpdate({token: token}, {
+                success: false
+            }, (error, foundMessage) => {
+                error ? console.warn(error) : console.log(foundMessage); 
+            })
+            
+            shapedOutput = {
+                errorMessage: errMsg
+            }
+            if (decodedToken){
+                const { name, email, message } = decodedToken.data;  
+                Object.assign(shapedOutput, { 
+                    success: true,
+                    name: name,
+                    email: email,
+                    message: message
+                }); 
+            } else {            
+                Object.assign(shapedOutput, {
+                    success: false,
+                    name: 'access denied',
+                    email: 'access denied',
+                    message: 'access denied'
+                })
+            }
+        } else {
+        // Token has been used
+            console.log('success:', success, 'token already used'); 
+            shapedOutput = {
                 success: false,
+                errorMessage: 'Sorry, this message is one-time access only.',
                 name: 'access denied',
                 email: 'access denied',
                 message: 'access denied'
-            })
+            }
         }
-        
         error ? res.status(404).json(error) : res.status(200).json(shapedOutput);    
     })
 })
