@@ -22,7 +22,7 @@ describe('message model/schema', () => {
     it('allows new messages to be saved in db', (done) => {
         const testMessage = {
             success: true,
-            message: 'error message is different',
+            errorMessage: 'error message is different',
             token: 'test token string - schema test'
         }; 
         Message.create(testMessage)
