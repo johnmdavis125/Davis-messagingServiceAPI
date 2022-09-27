@@ -19,9 +19,8 @@ beforeAll(() => {
 
     mongoose.connection.collections.messages.drop(); 
 })
-let retrievedTokenFromFirstEndpoint; 
 
-
+let retrievedDocumentFromFirstEndpoint; 
 describe('message controller: endpoint #1', () => {
     it('accepts POST to /api/message to create a new message', (done) => {
 
@@ -44,7 +43,7 @@ describe('message controller: endpoint #1', () => {
             expect(documents.length).toEqual(1); 
             expect(documents[0].token).toBeTruthy(); 
 
-            retrievedTokenFromFirstEndpoint = documents[0].token; 
+            retrievedDocumentFromFirstEndpoint = documents[0]; 
             done(); 
         })
     })
@@ -54,19 +53,22 @@ describe('message controller: endpoint #2', () => {
     it('accepts GET to /api/message/:token in order to retrieve associated message from database', (done) => {
         
         request(app)
-        .get(`/api/message/${retrievedTokenFromFirstEndpoint}`)
+        .get(`/api/message/${retrievedDocumentFromFirstEndpoint.token}`)
         .then((response) => {
+            console.log(response.text); 
             expect(response.statusCode).toEqual(200); 
-            expect(retrievedTokenFromFirstEndpoint).toBeTruthy(); 
+            expect(JSON.parse(response.text).success).toEqual(true); 
             done(); 
         })
     })
-
-    // it('will return an error message if request occurs after associated token is expired (24hrs)', () => {
-
-    // })
     
-    // it('will return an error if the same token is requested more than once', () => {
-
-    // })
+    it('will return an error if the same token is requested more than once', (done) => {
+        request(app)
+        .get(`/api/message/${retrievedDocumentFromFirstEndpoint.token}`)
+        .then((response) => {
+            expect(response.statusCode).toEqual(200); 
+            expect(JSON.parse(response.text).success).toEqual(false); 
+            done(); 
+        })
+    })
 })

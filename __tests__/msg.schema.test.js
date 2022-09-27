@@ -15,7 +15,7 @@ beforeAll(() => {
             console.warn('mongo test cxn warning', error)
     });
 
-    // mongoose.connection.collections.messages.drop(); 
+    mongoose.connection.collections.messages.drop(); 
 })
 
 describe('message model/schema', () => {
