@@ -1,7 +1,7 @@
 const express = require('express'); 
 const router = express.Router(); 
 const Message = require('../Models/Message'); 
-const createToken = require('../Utils/jwt_helpers'); 
+const { createToken, decodeToken } = require('../Utils/jwt_helpers'); 
 const validatePostToMessageRoute = require('../Utils/validation_helpers'); 
 // Endpoint #1: Creating the Token 
 router.post('/message', (req, res) => {
@@ -23,13 +23,13 @@ router.post('/message', (req, res) => {
 
     // generate JWT
         if (success && !errorMessage){
-            token = createToken(validatedUserInput, 5); 
+            token = createToken(validatedUserInput, 1); 
         }
 
     // output shape
         let shapedData = {
             success: success,
-            message: errorMessage,
+            errorMessage: errorMessage,
             token: token
         }
 
@@ -42,27 +42,31 @@ router.post('/message', (req, res) => {
 // Endpoint #2: Retrieving the message 
 router.get('/message/:token', (req, res) => {
     Message.find({ token: req.params.token }, (error, foundMessage) => {
-        const { success, token } = foundMessage[0]; 
-        // console.log('foundMessage[0]', foundMessage); 
+        const { token } = foundMessage[0]; 
+        const { decodedToken, errMsg } = decodeToken(token);
+        
+        let shapedOutput = {
+            errorMessage: errMsg
+        }
 
-        // default/hardcoded for now -> need to decode token -> build utility function
-        let errorMessage = null;
-        let name = 'test name';
-        let email = 'john@gmail.com';
-        let message = 'test message'; 
-
-
-        let shapedOutput = { 
-            success: success,
-            message: errorMessage,
-            name: name,
-            email: email,
-            message: message
+        if (decodedToken){
+            const { name, email, message } = decodedToken.data;  
+            Object.assign(shapedOutput, { 
+                success: true,
+                name: name,
+                email: email,
+                message: message
+            }); 
+        } else {            
+            Object.assign(shapedOutput, {
+                success: false,
+                name: 'access denied',
+                email: 'access denied',
+                message: 'access denied'
+            })
         }
         
-        if (success) {
-            error ? res.status(404).json(error) : res.status(200).json(shapedOutput);     
-        }
+        error ? res.status(404).json(error) : res.status(200).json(shapedOutput);    
     })
 })
 
