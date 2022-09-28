@@ -53,7 +53,7 @@
         npm run test
     - Note: There should be 4 test suites / 20 tests running. If only some of the tests run, you may need to hit 'a' to run all tests. 
 
-    ![testWatchOptions]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/testWatchOptions.png') 
+    ![testWatchOptions](/public/images/testWatchOptions.png) 
 
 [Back to Top](#table-of-contents)
 
@@ -113,32 +113,32 @@
     - GIVEN VALID INPUT:   
     Endpoint #1
 
-        ![validInputEndpoint1]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/validInputEndpoint1.png') 
+        ![validInputEndpoint1](/public/images/validInputEndpoint1.png) 
         
-        ![validInputEndpoint1db.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/validInputEndpoint1db.png') 
+        ![validInputEndpoint1db.png](/public/images/validInputEndpoint1db.png) 
 
-        ![validInputEndpoint1db.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/validInputEndpoint1db.png') 
+        ![validInputEndpoint1db.png](/public/images/validInputEndpoint1db.png) 
     
         Endpoint #2  
-        ![validGetEndpoint2.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/validGetEndpoint2.png')
+        ![validGetEndpoint2.png](/public/images/validGetEndpoint2.png)
 
-        ![validGetEndpoint2db.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/validGetEndpoint2db.png')
+        ![validGetEndpoint2db.png](/public/images/validGetEndpoint2db.png)
 
-        ![validInputOneTimeUse.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/validInputOneTimeUse.png')
+        ![validInputOneTimeUse.png](/public/images/validInputOneTimeUse.png)
      
     - GIVEN INVALID INPUT:
     Endpoint #1
 
-        ![invalidName.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/invalidName.png') 
+        ![invalidName.png](/public/images/invalidName.png) 
 
-        ![invalidEmail.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/invalidEmail.png') 
+        ![invalidEmail.png](/public/images/invalidEmail.png) 
 
-        ![invalidMessage.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/invalidMessage.png') 
+        ![invalidMessage.png](/public/images/invalidMessage.png) 
 
     - TOKEN EXPIRED:
-        ![expirationPt2.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/expirationPt2.png')  
+        ![expirationPt2.png](/public/images/expirationPt2.png)  
 
-        ![expirationPt2.png]('https://github.com/johnmdavis125/Davis-messagingServiceAPI/public/images/expirationPt2.png')  
+        ![expirationPt2.png](/public/images/expirationPt2.png)  
 
     - **_Note on token expiration timeframe:_** 
         - As specified in the requirements, the default JWT expiration timeframe is set to 24 hrs (see line 25 in 'messages_controller.js'). This can easily be manipulated for ease of testing. 
