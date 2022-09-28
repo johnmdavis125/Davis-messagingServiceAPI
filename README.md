@@ -114,34 +114,35 @@
 [Back to Top](#table-of-contents)
 
 ### Postman Test Examples
-    - GIVEN VALID INPUT:   
-    Endpoint #1
-        - Valid Input -> POST to Endpoint #1
-        ![validInputEndpoint1](/public/images/validInputEndpoint1.png) 
-        - Valid Input -> See resulting document in mongoDB
+- GIVEN VALID INPUT:  
+
+    Endpoint #1  
+    - Valid Input -> POST to Endpoint #1
+        ![validInputEndpoint1](/public/images/validInputEndpoint1.png)
+    - Valid Input -> See resulting document in mongoDB
         ![validInputEndpoint1db.png](/public/images/validInputEndpoint1db.png)  
     
-        Endpoint #2  
-        - Valid Input -> GET to Endpoint #2
+    Endpoint #2  
+    - Valid Input -> GET to Endpoint #2
         ![validGetEndpoint2.png](/public/images/validGetEndpoint2.png)
-        - Valid Input -> After successful GET, 'success' changed to 'false'
+    - Valid Input -> After successful GET, 'success' changed to 'false'
         ![validGetEndpoint2db.png](/public/images/validGetEndpoint2db.png)
-        - Valid Input -> GET to Endpoint #2 attempted a second time, denied
+    - Valid Input -> GET to Endpoint #2 attempted a second time, denied
         ![validInputOneTimeUse.png](/public/images/validInputOneTimeUse.png)
      
-    - GIVEN INVALID INPUT:
-    Endpoint #1
-        - Invalid Input for 'name' -> POST to Endpoint #1 (returns error)
+- GIVEN INVALID INPUT:  
+Endpoint #1
+    - Invalid Input for 'name' -> POST to Endpoint #1 (returns error)
         ![invalidName.png](/public/images/invalidName.png) 
-        - Invalid Input for 'email' -> POST to Endpoint #1 (returns error)
+    - Invalid Input for 'email' -> POST to Endpoint #1 (returns error)
         ![invalidEmail.png](/public/images/invalidEmail.png) 
-        - Invalid Input for 'message' -> POST to Endpoint #1 (returns error)
+    - Invalid Input for 'message' -> POST to Endpoint #1 (returns error)
         ![invalidMessage.png](/public/images/invalidMessage.png) 
 
-    - TOKEN EXPIRED:
-        - Valid Input -> POST to Endpoint #1
+- TOKEN EXPIRED:  
+    - Valid Input -> POST to Endpoint #1
         ![expirationPt2.png](/public/images/expirationPt1.png)  
-        - Attempted GET after expiration -> GET to Endpoint #2, denied
+    - Attempted GET after expiration -> GET to Endpoint #2, denied
         ![expirationPt2.png](/public/images/expirationPt2.png)  
 
     - **_Note on token expiration timeframe:_** 
