@@ -4,6 +4,7 @@
 - [Project Overview](#project-overview)
 - [Running the Code Locally](#running-the-code-locally)
 - [Testing with Postman](#testing-with-postman)
+- [Postman Test Examples](#postman-test-examples)
 - [General Project Notes/Discussion](#general-notes)
 - [Notable Dependencies](#notable-dependencies)
 
@@ -110,6 +111,9 @@
         - Note: the errorMessage field should be null unless an error has occurred
         - Note: the name, email, and message fields should match the values provided in endpoint #1
 
+[Back to Top](#table-of-contents)
+
+### Postman Test Examples
     - GIVEN VALID INPUT:   
     Endpoint #1
         - Valid Input -> POST to Endpoint #1
@@ -136,8 +140,8 @@
 
     - TOKEN EXPIRED:
         - Valid Input -> POST to Endpoint #1
-        ![expirationPt2.png](/public/images/expirationPt2.png)  
-        - Attempt after expiration -> GET to Endpoint #2, denied
+        ![expirationPt2.png](/public/images/expirationPt1.png)  
+        - Attempted GET after expiration -> GET to Endpoint #2, denied
         ![expirationPt2.png](/public/images/expirationPt2.png)  
 
     - **_Note on token expiration timeframe:_** 
