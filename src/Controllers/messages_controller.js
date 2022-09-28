@@ -22,8 +22,9 @@ router.post('/message', (req, res) => {
         }
 
     // generate JWT
+        let minutesUntilExpiration = 3;     
         if (success && !errorMessage){
-            token = createToken(validatedUserInput, 1); 
+            token = createToken(validatedUserInput, minutesUntilExpiration); 
         }
 
     // output shape
