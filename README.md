@@ -7,6 +7,7 @@
 - [Postman Test Examples](#postman-test-examples)
 - [General Project Notes/Discussion](#general-notes)
 - [Notable Dependencies](#notable-dependencies)
+- [Thank You](#thank-you)
 
 ### Project Overview
 - Description  
@@ -54,7 +55,7 @@
         npm run test
     - Note: There should be 4 test suites / 20 tests running. If only some of the tests run, you may need to hit 'a' to run all tests. 
 
-    ![testWatchOptions](/public/images/testWatchOptions.png) 
+        ![testWatchOptions](/public/images/testWatchOptions.png) 
 
 [Back to Top](#table-of-contents)
 
@@ -84,7 +85,7 @@
                 - type: 'string'
                 - length: limited to 250 characters  
     - Output: JSON
-        ```json
+        ```
         {
             "success": boolean,
             "errorMessage": null || "string",
@@ -99,7 +100,7 @@
     - Method: GET
         - Note: the ':token' parameter should be copied & pasted from the 'token' field in the result of a previous postman test to endpoint #1. Again, this can only be done once before returning an error, and must be completed prior to token expiration.
     - Output: JSON
-        ```json
+        ```
         {
             "success": boolean,
             "errorMessage": null || "string",
@@ -152,16 +153,16 @@ Endpoint #1
 
 ### General Notes
 - Requirements Management
-    - JIRA Board
-    - Commit Tracking
+    - JIRA - Kanban board w/integrated commit tracking
+        - [JIRA Kanban Board](https://johnmdavis125.atlassian.net/jira/software/projects/DTI/boards/2)
 - Interpreting the requirements: 
     - Changed first 'message' key of JSON objects to 'errorMessage'
         - To avoid key naming conflicts on the JSON output of endpoint #2 (project specification includes two instances of the 'message' key)
         - This is an example of something I would communicate with team & clarify with requirements author(s)/stakeholder(s) prior to implementing. 
     - My approach to implementing single-use JWT auth
         - After considerable research on auth using JWTs, the inability to manually 'revoke' a JWT on demand (outside its built-in expiration) appears to be an inherent limitation of the JWT-based auth model, and to the best of my knowledge is reflected by industry consensus. 
-        - For this reason I decided to utilize the 'success' key of each document stored in the db as a 'state' variable indicating whether or not the token had been used yet. Each request to endpoint #2 must check this 'state' and proceed by either allowing message retrieval (and altering the document state to 'used') or by denying access and returning an error if state had already been set by a previous request. Notably, it does not have to be the success key that's used for this purpose. Alternatively, an additional boolean such as 'tokenUsed' could be added and used for the same purpose...dealer's choice. 
-        - One potential drawback of this solution is that, in a sense, you are re-introducing state to what was a stateless server (undermining one of the main benefits of using the JWT-auth model). However, because the inherent purpose of this feature limits requests to only ~1 per message anyway, the additional computational 'cost' should be reasonable.
+        - For this reason, instead of trying to manually revoke the JWT, I decided to utilize the 'success' key of each document stored in the db as a 'state' variable indicating whether or not the token had been used yet. Each request to endpoint #2 must check this 'state' and proceed by either allowing message retrieval (and altering the document state to 'used') or by denying access and returning an error if state had already been set by a previous request. Notably, it does not have to be the success key that's used for this purpose. Alternatively, an additional boolean such as 'tokenUsed' could be added and used for the same purpose...dealer's choice. 
+        - One potential drawback of this solution is that, in a sense, you are re-introducing state to what was a stateless server (undermining one of the main benefits of using the JWT-auth model). However, because the inherent purpose of this feature limits requests to only ~1 per message anyway, the additional computational 'cost' should be reasonably limited.
         - This is an example of something I would communicate with the team & clarify with requirements author(s)/stakeholder(s) prior to implementing. 
 
 [Back to Top](#table-of-contents)
@@ -183,5 +184,10 @@ Endpoint #1
 - (DOMpurify): security/validation
     - [dompurify npm](https://www.npmjs.com/package/dompurify)
     - Considered but did not implement (would likely be implemented client-side)
+
+[Back to Top](#table-of-contents)
+
+### Thank You
+- I really enjoyed working on this project and feel like I learned quite a bit diving into auth & TDD, so thank you for the opportunity and for your consideration!
 
 [Back to Top](#table-of-contents)
