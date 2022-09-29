@@ -22,7 +22,7 @@ router.post('/message', (req, res) => {
         }
 
     // generate JWT
-        let minutesUntilExpiration = 3;     
+        let minutesUntilExpiration = 1;     
         if (success && !errorMessage){
             token = createToken(validatedUserInput, minutesUntilExpiration); 
         }
@@ -35,60 +35,74 @@ router.post('/message', (req, res) => {
         }
 
     Message.create(shapedData, (error, createdMessage) => {    
-        error ? res.status(404).send(error) :
-        res.status(200).send(createdMessage)
+        error ? res.status(404).send(error) : res.status(200).send(createdMessage)
     });
 });
 
 // Endpoint #2: Retrieving the message 
 router.get('/message/:token', (req, res) => {
-    Message.find({ token: req.params.token }, (error, foundMessage) => {
-        const { success, token } = foundMessage[0]; 
-        const { decodedToken, errMsg } = decodeToken(token);
+    Message.find({ token: req.params.token }, (error, foundMessage) => { 
         let shapedOutput; 
-        
-        // Token has not been used
-        if (success) {
-            console.log('success!:', success)
-            Message.findOneAndUpdate({token: token}, {
-                success: false
-            }, (error, foundMessage) => {
-                error ? console.warn(error) : console.log(foundMessage); 
-            })
-            
-            shapedOutput = {
-                errorMessage: errMsg
-            }
-            if (decodedToken){
-                const { name, email, message } = decodedToken.data;  
-                Object.assign(shapedOutput, { 
-                    success: true,
-                    name: name,
-                    email: email,
-                    message: message
-                }); 
-            } else {            
-                Object.assign(shapedOutput, {
+        if (error) {
+            res.status(404).json(error) 
+        } else {            
+            if (!foundMessage[0]) {
+                shapedOutput = {
                     success: false,
+                    errorMessage: 'invalid token, request denied',
                     name: 'access denied',
                     email: 'access denied',
                     message: 'access denied'
-                })
+                }
+            } else {
+                const { success, token } = foundMessage[0]; 
+                const { decodedToken, errMsg } = decodeToken(token);
+        
+                if (success) {
+                // token has not been used
+                            console.log('success!:', success)
+                            Message.findOneAndUpdate({token: token}, {success: false}, (error, foundMessage) => {
+                                error ? console.warn(error) : console.log(foundMessage); 
+                            }); 
+                            
+                            shapedOutput = {
+                                errorMessage: errMsg
+                            }
+                            
+                            if (decodedToken){
+                                // token is not expired
+                                const { name, email, message } = decodedToken.data;  
+                                Object.assign(shapedOutput, { 
+                                        success: true,
+                                        name: name,
+                                        email: email,
+                                        message: message
+                                    }); 
+                            } else {            
+                                // token is expired
+                                Object.assign(shapedOutput, {
+                                        success: false,
+                                        name: 'access denied',
+                                        email: 'access denied',
+                                        message: 'access denied'
+                                    })
+                            }
+                } else {
+                // token has been used
+                        console.log('success:', success, 'token already used'); 
+                        shapedOutput = {
+                                success: false,
+                                errorMessage: 'Sorry, this message is one-time access only.',
+                                name: 'access denied',
+                                email: 'access denied',
+                                message: 'access denied'
+                            }
+                }
             }
-        } else {
-        // Token has been used
-            console.log('success:', success, 'token already used'); 
-            shapedOutput = {
-                success: false,
-                errorMessage: 'Sorry, this message is one-time access only.',
-                name: 'access denied',
-                email: 'access denied',
-                message: 'access denied'
-            }
+            res.status(200).json(shapedOutput);     
         }
-        error ? res.status(404).json(error) : res.status(200).json(shapedOutput);    
     })
 })
-
-
+                
+                            
 module.exports = router; 
