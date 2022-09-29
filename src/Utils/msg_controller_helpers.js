@@ -4,7 +4,6 @@ const { decodeToken } = require('./jwt_helpers');
 const changeTokenStateToUsed = (foundMessage) => {
     const { success, token } = foundMessage[0]; 
 
-    console.log('success!:', success)
     Message.findOneAndUpdate({token: token}, {success: false}, (error, updatedDocument) => {
         error ? console.warn(error) : console.log(updatedDocument); 
     }); 
