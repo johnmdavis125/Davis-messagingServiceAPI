@@ -84,7 +84,7 @@ describe('ENDPOINT #1 /api/message - accepts validated user input in order to ge
         describe('createToken utility function', () => {
             
             
-            let minutesUntilExpiration = 3; 
+            let minutesUntilExpiration = 1440; // 24 hours
             
             testToken = createToken(passingTestInput, minutesUntilExpiration); 
             
@@ -128,7 +128,7 @@ describe('ENDPOINT #1 /api/message - accepts validated user input in order to ge
                 jest.useFakeTimers()
                 let time1 = (Date.now() / 1000); 
 
-                jest.advanceTimersByTime(1000 * 60 * 3); // 3 min           
+                jest.advanceTimersByTime(1000 * 60 * 1440); // 24 hours           
                 let time2 = (Date.now() / 1000); 
                 
                 let timePassed = time2 - time1; 

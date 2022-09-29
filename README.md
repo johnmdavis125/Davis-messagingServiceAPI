@@ -133,7 +133,7 @@
     Endpoint #2  
     - Valid Input -> GET to Endpoint #2
         ![validGetEndpoint2.png](/public/images/validGetEndpoint2.png)
-    - Valid Input -> After successful GET, 'success' changed to 'false'
+    - Valid Input -> After successful GET, 'success' changed to 'false' in the db document
         ![validGetEndpoint2db.png](/public/images/validGetEndpoint2db.png)
     - Valid Input -> GET to Endpoint #2 attempted a second time, denied
         ![validInputOneTimeUse.png](/public/images/validInputOneTimeUse.png)
@@ -188,9 +188,7 @@ Endpoint #1
     - [supertest npm](https://www.npmjs.com/package/supertest)
     - [supertest home](https://openbase.com/js/supertest/documentation)
     - [supertest github](https://github.com/visionmedia/supertest)
-- (DOMpurify): security/validation
-    - [dompurify npm](https://www.npmjs.com/package/dompurify)
-    - Considered but did not implement (would likely be implemented client-side)
+- Note: considered using [dompurify](https://www.npmjs.com/package/dompurify) to implement sanitization/help mitigate XSS vulnerabilities, etc., but decided not to implement for the purposes of this project.
 
 [Back to Top](#table-of-contents)
 
