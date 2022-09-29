@@ -45,6 +45,13 @@
     - Note: if you want the node/express dev server to run on a port other default (3001), add a 'PORT' variable in your .env file as well: 
         ```
         PORT = <yourportnumber>
+- Ensure mongoDB server is running on your local machine. [MongoDocs](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/)
+    ```
+    mongod
+    ```
+    or
+    ```
+    brew services start mongo
 - Start scripts 
     - The dev server and test suite are configured to support being run individually or simultaneously as desired. After completing the configuration steps above...
     - Start the development server:
