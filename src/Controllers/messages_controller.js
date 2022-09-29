@@ -29,7 +29,8 @@ router.post('/message', (req, res) => {
         }
 
     // generate JWT
-        let minutesUntilExpiration = 1;     
+        const TWENTYFOURHOURSINMINUTES = 1440;
+        let minutesUntilExpiration = TWENTYFOURHOURSINMINUTES; 
         if (success && !errorMessage){
             token = createToken(validatedUserInput, minutesUntilExpiration); 
         }

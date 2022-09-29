@@ -147,7 +147,7 @@ Endpoint #1
         ![expirationPt2.png](/public/images/expirationPt2.png)  
 
     - **_Note on token expiration timeframe:_** 
-        - As specified in the requirements, the default JWT expiration timeframe is set to 24 hrs (see line 25 in 'messages_controller.js'). This can easily be manipulated for ease of testing. 
+        - As specified in the requirements, the default JWT expiration timeframe is set to 24 hrs (see 'minutesUntilExpiration' in 'messages_controller.js'). This can easily be manipulated for ease of testing. 
 
 [Back to Top](#table-of-contents)
 
